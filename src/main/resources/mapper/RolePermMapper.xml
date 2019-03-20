@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lemon.demo.dao.RolePermMapper">
+  <resultMap id="BaseResultMap" type="java.util.Map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="perm_id" jdbcType="VARCHAR" property="permId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="perm_name" jdbcType="VARCHAR" property="permName" />
+  </resultMap>
+
+  <select id="getPermsByUserId" resultType="string" parameterType="java.lang.Integer">
+    select distinct
+        p.perm_value
+    from
+        sys_perm p,
+        role_perm rp,
+        user_role ur
+    where
+        p.id = rp.perm_id
+        and ur.role_id = rp.role_id
+        and ur.user_id = #{userId}
+        and p.is_disable = 0
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+      select p.id,p.role_id,r.role_name,p.perm_id,sp.perm_name from role_perm p left join sys_role r on p.role_id=r.id left join sys_perm sp on p.perm_id=sp.id
+  </select>
+</mapper>

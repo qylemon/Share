@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lemon.demo.dao.NoteMapper">
+  <resultMap id="BaseResultMap" type="java.util.Map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="tagid" jdbcType="INTEGER" property="tagid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="message" jdbcType="LONGVARCHAR" property="message" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+      select n.id,n.message,n.create_time,u.user_name,t.tag_name,n.status from note n left join tag t on n.tagid=t.id left join user u on n.create_by=u.id
+  </select>
+</mapper>
